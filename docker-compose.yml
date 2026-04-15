@@ -1,0 +1,26 @@
+# Garmin RAG Project - Docker Compose
+#
+# 用於地端啟動 PostgreSQL + pgvector 開發環境
+#
+# 本檔案應包含：
+# 1. services:
+#    - db (PostgreSQL + pgvector):
+#      - image: pgvector/pgvector:pg16
+#      - ports: 5432:5432
+#      - environment: POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
+#      - volumes: 持久化資料存儲
+#
+#    - app (FastAPI 應用) [可選]:
+#      - build: .
+#      - ports: 8000:8000
+#      - depends_on: db
+#      - environment: DATABASE_URL, LLM_API_KEY 等
+#      - volumes: 掛載本地代碼以支援 hot-reload
+#
+# 2. volumes:
+#    - pgdata: PostgreSQL 資料持久化
+#
+# 3. networks:
+#    - garmin-rag-net: 內部網路
+#
+# 使用方式：docker-compose up -d

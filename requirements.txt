@@ -1,0 +1,51 @@
+# Garmin RAG Project - Python 依賴
+#
+# === 階段一：地端開發 (MVP) ===
+# Web Framework
+# fastapi
+# uvicorn[standard]
+# python-multipart          # 檔案上傳支援
+#
+# Database & ORM
+# sqlmodel                  # SQLAlchemy + Pydantic 整合
+# sqlalchemy
+# psycopg2-binary           # PostgreSQL driver
+# pgvector                  # pgvector Python client
+#
+# LLM & RAG
+# langchain                 # RAG 框架核心
+# langchain-community       # 社群整合（PGVector 等）
+# langchain-anthropic       # Claude LLM 整合
+# langchain-google-genai    # Gemini LLM 整合（可選）
+# anthropic                 # Claude API SDK
+# tiktoken                  # Token 計算
+#
+# Embedding
+# sentence-transformers     # 本地 Embedding 模型（可選）
+# openai                    # OpenAI Embedding API（可選）
+#
+# Data Processing
+# pandas                    # 數據處理與分析
+# pydantic-settings         # 環境變數管理
+#
+# === 階段二：正式測試 ===
+# supabase                  # Supabase Python client
+#
+# === 階段三：雲端部署 ===
+# Google API
+# google-api-python-client  # Google Calendar API
+# google-auth-oauthlib      # Google OAuth 2.0
+# google-auth-httplib2
+#
+# Auth
+# python-jose[cryptography] # JWT token
+# passlib[bcrypt]           # 密碼雜湊
+#
+# Frontend（可選）
+# streamlit                 # 簡易前端 UI
+#
+# === 測試 ===
+# pytest
+# pytest-asyncio
+# httpx                     # 異步 HTTP 測試 client
+# ragas                     # RAG 評測框架（可選）
