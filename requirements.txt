@@ -7,26 +7,31 @@
 # python-multipart          # 檔案上傳支援
 #
 # Database & ORM
-# sqlmodel                  # SQLAlchemy + Pydantic 整合
-# sqlalchemy
-# psycopg2-binary           # PostgreSQL driver
+sqlmodel                  # SQLAlchemy + Pydantic 整合
+sqlalchemy
+psycopg2-binary           # PostgreSQL driver
 # pgvector                  # pgvector Python client
 #
 # LLM & RAG
+langchain-core            # Document type and base abstractions
+langchain-postgres        # PGVector vector store (replaces deprecated langchain-community PGVector)
+langchain-huggingface     # HuggingFaceEmbeddings wrapper
 # langchain                 # RAG 框架核心
-# langchain-community       # 社群整合（PGVector 等）
 # langchain-anthropic       # Claude LLM 整合
 # langchain-google-genai    # Gemini LLM 整合（可選）
 # anthropic                 # Claude API SDK
 # tiktoken                  # Token 計算
 #
 # Embedding
-# sentence-transformers     # 本地 Embedding 模型（可選）
+sentence-transformers     # 本地 Embedding 模型 (all-MiniLM-L6-v2)
 # openai                    # OpenAI Embedding API（可選）
 #
 # Data Processing
 # pandas                    # 數據處理與分析
-# pydantic-settings         # 環境變數管理
+pydantic-settings         # 環境變數管理
+#
+# Database driver
+psycopg[binary]           # psycopg3 driver required by langchain-postgres
 #
 # === 階段二：正式測試 ===
 # supabase                  # Supabase Python client

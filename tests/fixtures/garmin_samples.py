@@ -1,0 +1,1 @@
+"""Mock Garmin data fixtures for testing"""

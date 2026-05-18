@@ -1,9 +1,16 @@
 """
-資料庫遷移與一次性腳本
+開發工具腳本 - 一次性執行的實用工具
 
-本目錄應包含：
-- init_db.py：初始化資料庫 schema、建立 pgvector extension
-- seed_data.py：匯入測試用 Garmin 樣本數據
-- migrate.py：資料庫遷移腳本（或整合 Alembic）
-- cleanup.py：清理過期 embedding、暫存檔案等
+本目錄的腳本不在生產環境運行，用於：
+- 環境驗證（test_db_connection.py）
+- 數據分析（analyze_garmin_zip.py）
+- 數據提取（extract_sample_jsons.py）
+- 數據遷移（migrate_data.py）
+- Mock 數據生成（generate_mock_garmin.py）
+
+所有腳本都可以用 python scripts/xxx.py 直接執行
+
+Phase 2 優先：
+  ✅ test_db_connection.py - DB 連接驗證
+  🟠 analyze_garmin_zip.py - ZIP 結構分析（Task 1）
 """
