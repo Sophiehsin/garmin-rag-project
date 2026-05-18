@@ -36,13 +36,16 @@ Tests: `tests/test_chunker.py` (10 tests covering all edge cases)
 
 ---
 
-## Task 9: FastAPI Endpoints
+## Task 9: FastAPI Endpoints ✅ DONE
 
-**Files:** `app/api/routers/upload.py`, `app/api/routers/query.py`, `app/main.py`
+**Files:** `app/api/routers/upload.py`, `app/api/routers/query.py`, `app/main.py`, `app/api/schemas.py`, `app/api/dependencies.py`
 
-- `POST /api/v1/upload` — accepts ZIP, runs: parse → chunk → embed → store
-- `POST /api/v1/query` — natural language query → semantic search → AI answer
-- Enable `fastapi`, `uvicorn`, `python-multipart` in `requirements.txt`
+- `POST /api/v1/upload` — accepts ZIP, runs: parse → chunk → embed → store; returns `{status, documents_stored, breakdown, collection}`
+- `POST /api/v1/query` — query text → pgvector similarity search → ranked `ChunkResult` list; supports `data_type` filter
+- `GET /health` — liveness check
+- `lifespan` pre-loads embedding model on startup so first request isn't slow
+- Uses `app.dependency_overrides` pattern for testable DI
+- Tests: 14 tests in `tests/test_api.py` (mocked + real-ZIP integration)
 
 ---
 

@@ -2,9 +2,9 @@
 #
 # === 階段一：地端開發 (MVP) ===
 # Web Framework
-# fastapi
-# uvicorn[standard]
-# python-multipart          # 檔案上傳支援
+fastapi
+uvicorn[standard]
+python-multipart          # 檔案上傳支援
 #
 # Database & ORM
 sqlmodel                  # SQLAlchemy + Pydantic 整合
