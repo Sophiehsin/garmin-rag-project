@@ -38,6 +38,12 @@ Thumbs.db
 # Docker
 docker-compose.override.yml
 
+# Project notes & archive
+docs/
+
+# Claude Code guidance file
+CLAUDE.md
+
 # Google OAuth Credentials
 credentials.json
 token.json
