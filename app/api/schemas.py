@@ -16,6 +16,7 @@ class QueryRequest(BaseModel):
     query: str
     k: int = 5
     data_type: Optional[str] = None
+    use_llm: bool = True
 
     @field_validator("query")
     @classmethod
@@ -44,3 +45,4 @@ class ChunkResult(BaseModel):
 class QueryResponse(BaseModel):
     query: str
     results: list[ChunkResult]
+    answer: Optional[str] = None

@@ -119,7 +119,7 @@ def test_query_success_mocked():
 
     app.dependency_overrides[get_store] = lambda: mock_store
     try:
-        response = client.post("/api/v1/query", json={"query": "cycling session", "k": 3})
+        response = client.post("/api/v1/query", json={"query": "cycling session", "k": 3, "use_llm": False})
     finally:
         app.dependency_overrides.clear()
 
@@ -141,7 +141,7 @@ def test_query_with_data_type_filter_mocked():
     try:
         response = client.post(
             "/api/v1/query",
-            json={"query": "deep sleep", "k": 5, "data_type": "sleep"},
+            json={"query": "deep sleep", "k": 5, "data_type": "sleep", "use_llm": False},
         )
     finally:
         app.dependency_overrides.clear()
@@ -189,7 +189,7 @@ def test_upload_real_zip():
 def test_query_after_upload():
     response = client.post(
         "/api/v1/query",
-        json={"query": "cycling session with high elevation", "k": 5, "data_type": "activity"},
+        json={"query": "cycling session with high elevation", "k": 5, "data_type": "activity", "use_llm": False},
     )
     assert response.status_code == 200
     body = response.json()

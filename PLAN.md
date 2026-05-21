@@ -49,10 +49,12 @@ Tests: `tests/test_chunker.py` (10 tests covering all edge cases)
 
 ---
 
-## Task 10: RAG Chain
+## Task 10: RAG Chain ✅ DONE
 
-**File:** `app/services/rag_engine.py` (currently stub)
+**File:** `app/services/rag_engine.py`
 
-- LangChain retrieval chain: PGVector similarity search → Claude LLM
-- Metadata filters: date range, activity type, data_type, `is_current_pr`
-- Prompt template framing retrieved chunks as health context for Claude
+- Async `ask()`: pgvector retrieval → chronological sort → metadata-enriched context → Claude LLM via `ainvoke()`
+- 4 production enhancements: metadata injection, lost-in-the-middle mitigation (date sort), async invocation, token budgeting (12k char gate + 30s timeout)
+- `/api/v1/query` upgraded: `use_llm=True` returns `answer` field; `use_llm=False` returns raw chunks only
+- Integration test skipped until `ANTHROPIC_API_KEY` is in `.env`
+- Tests: 9 tests in `tests/test_rag_engine.py`

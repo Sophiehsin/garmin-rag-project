@@ -1,34 +1,84 @@
+"""RAG chain — retrieval from pgvector + generation via Claude.
+
+Production-grade enhancements:
+  1. Metadata-enriched context: each excerpt includes Date and Type tags so
+     Claude can distinguish a 2018 session from a 2026 one without guessing.
+  2. Chronological sorting: chunks are sorted by date before context assembly
+     (lost-in-the-middle mitigation — most recent data at the end of the prompt).
+  3. Async invocation: ainvoke() keeps the FastAPI thread pool unblocked during
+     the 2-5s Anthropic network round-trip.
+  4. Token budgeting: character-length gate + explicit max_tokens + timeout
+     prevent runaway billing and stalled requests.
 """
-LangChain 檢索與 LLM 串接服務
 
-本檔案應包含：
-1. Vector Store 初始化
-   - 使用 LangChain 的 PGVector 作為 vector store
-   - 連接 PostgreSQL + pgvector
-   - 設定 similarity search 參數 (top_k, threshold)
+from __future__ import annotations
 
-2. Retriever 建構
-   - 建立 LangChain Retriever
-   - 支援 metadata filtering（按日期範圍、活動類型篩選）
-   - 可選：MMR (Maximal Marginal Relevance) 以提升結果多樣性
+from langchain_anthropic import ChatAnthropic
+from langchain_core.documents import Document
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_postgres.vectorstores import PGVector
 
-3. Prompt Template 設計
-   - System prompt：定義 AI 健康助理角色與回答風格
-   - 加入 Garmin 數據上下文的 template
-   - 支援多輪對話的 prompt 組合
+from app.core.config import settings
 
-4. LLM Chain 串接
-   - 整合 Claude 3.5 Sonnet / Gemini 1.5 Pro
-   - 可選：地端 Ollama (Llama 3 / Mistral) 用於測試
-   - RetrievalQA Chain 或 ConversationalRetrievalChain
-   - 設定 temperature, max_tokens 等參數
+MAX_CONTEXT_CHARS = 12_000  # ~3,000 tokens at avg 4 chars/token
 
-5. 查詢處理流程
-   - 接收使用者自然語言問題
-   - 執行 retrieval -> augmentation -> generation
-   - 回傳結構化回應（答案 + 引用來源 + 相關數據）
+SYSTEM_PROMPT = (
+    "You are a personal health assistant with access to the user's Garmin fitness data. "
+    "Answer the user's question using ONLY the data excerpts provided below. "
+    "Be specific, cite numbers and dates when available, and speak directly to "
+    'the user ("you", "your"). If the data doesn\'t contain enough information '
+    "to answer, say so clearly."
+)
 
-6. RAG 評測輔助（配合 tests/ 使用）
-   - 提供評測用的 retrieval 結果匯出
-   - 支援 faithfulness / relevance 等指標計算
-"""
+_PROMPT = ChatPromptTemplate.from_messages([
+    ("system", SYSTEM_PROMPT),
+    ("human", "Data excerpts:\n{context}\n\nQuestion: {question}"),
+])
+
+
+def _build_llm() -> ChatAnthropic:
+    return ChatAnthropic(
+        model=settings.llm_model,
+        api_key=settings.anthropic_api_key,
+        max_tokens=1024,
+        timeout=30.0,
+    )
+
+
+def _build_context(hits: list[tuple[Document, float]]) -> str:
+    context = "\n\n".join(
+        f"[Excerpt {i + 1}] (Date: {doc.metadata.get('date')}, Type: {doc.metadata.get('data_type')})\n"
+        f"Content: {doc.page_content}"
+        for i, (doc, _) in enumerate(hits)
+    )
+    if len(context) > MAX_CONTEXT_CHARS:
+        context = context[:MAX_CONTEXT_CHARS] + "\n\n[Context truncated]"
+    return context
+
+
+async def ask(
+    query: str,
+    store: PGVector,
+    k: int = 5,
+    filter_dict: dict | None = None,
+) -> tuple[str, list[tuple[Document, float]]]:
+    """Retrieve top-k chunks from pgvector and generate an answer via Claude.
+
+    Returns:
+        (answer, hits) — the LLM-generated answer string and the raw retrieved
+        chunks (passed back so the API can include them in the response).
+    """
+    hits: list[tuple[Document, float]] = store.similarity_search_with_score(
+        query, k=k, filter=filter_dict
+    )
+
+    # Sort chronologically so Claude reads data oldest-to-newest; most recent
+    # data sits at the end of the prompt (strongest LLM recall position).
+    hits.sort(key=lambda x: x[0].metadata.get("date") or "")
+
+    context = _build_context(hits)
+
+    response = await (_PROMPT | _build_llm()).ainvoke(
+        {"context": context, "question": query}
+    )
+    return response.content, hits

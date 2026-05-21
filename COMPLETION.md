@@ -13,6 +13,7 @@
 | 7 | Chunker — converts parsed Garmin dicts into LangChain `Document` objects | `app/services/chunker.py`; natural prose, pace for running, zero-division guard, `is_current_pr` metadata |
 | 8 | Embedder — generates vectors and stores in pgvector | `app/services/embedder.py`; MPS/CUDA/CPU auto-detect, cosine similarity, deterministic IDs (idempotent re-upload), batch_size=32 |
 | 9 | FastAPI HTTP layer — `POST /api/v1/upload` + `POST /api/v1/query` + `GET /health` | `app/main.py`, `app/api/`; 14 tests (mocked + integration) |
+| 10 | RAG Chain — async Claude LLM generation on top of pgvector retrieval | `app/services/rag_engine.py`; metadata-enriched context, chronological sort, async `ainvoke`, token budgeting |
 
 ## Production Code
 
@@ -21,7 +22,8 @@ app/main.py                ~35 lines  — FastAPI app, lifespan (pre-load embedd
 app/api/schemas.py         ~45 lines  — UploadResponse, QueryRequest, ChunkResult, QueryResponse
 app/api/dependencies.py     ~8 lines  — get_store() DI function
 app/api/routers/upload.py  ~55 lines  — POST /api/v1/upload (ZIP → parse → chunk → embed → store)
-app/api/routers/query.py   ~35 lines  — POST /api/v1/query (query → similarity search → ChunkResult list)
+app/api/routers/query.py   ~40 lines  — POST /api/v1/query (async; use_llm=True → RAG answer, False → raw chunks)
+app/services/rag_engine.py ~80 lines  — async ask(): retrieval → sort → metadata context → Claude ainvoke()
 app/services/parser.py     306 lines  — ZIP parsing, key normalization, timestamp & unit conversion
 app/services/chunker.py    ~230 lines — Garmin dict → LangChain Document conversion
 app/services/embedder.py   ~100 lines — embed + store to pgvector, idempotent IDs
@@ -33,7 +35,7 @@ app/models/records.py      339 lines  — PersonalRecordModel (30+ fields)
 app/models/sql_models.py   116 lines  — User, SummarizedActivityDB, SleepDataDB, PersonalRecordDB
 ```
 
-## Tests: 72 passing
+## Tests: 81 passing, 1 skipped (RAG integration — needs ANTHROPIC_API_KEY)
 
 | File | Count | Coverage |
 |------|-------|----------|
@@ -42,6 +44,7 @@ app/models/sql_models.py   116 lines  — User, SummarizedActivityDB, SleepDataD
 | `tests/test_chunker.py` | 21 | Activity/sleep/record prose formatting, running pace, zero-division guard, `is_current_pr` metadata, real-data integration |
 | `tests/test_embedder.py` | 14 | Connection string, deterministic IDs, device detection, cosine distance, mocked store/retrieve, live roundtrip + idempotency |
 | `tests/test_api.py` | 14 | /health, upload validation (422/400), upload success mock, query validation (422), query success mock, filter mock, 503 handling, real-ZIP integration |
+| `tests/test_rag_engine.py` | 9 | context metadata injection, truncation, excerpt numbering, async ask return shape, chronological sort, filter passthrough, endpoint LLM mock, use_llm=False, 503 on failure |
 
 ## Key Design Decisions
 

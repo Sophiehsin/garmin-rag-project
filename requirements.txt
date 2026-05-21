@@ -17,9 +17,9 @@ langchain-core            # Document type and base abstractions
 langchain-postgres        # PGVector vector store (replaces deprecated langchain-community PGVector)
 langchain-huggingface     # HuggingFaceEmbeddings wrapper
 # langchain                 # RAG 框架核心
-# langchain-anthropic       # Claude LLM 整合
+langchain-anthropic        # Claude LLM 整合
 # langchain-google-genai    # Gemini LLM 整合（可選）
-# anthropic                 # Claude API SDK
+anthropic                  # Claude API SDK
 # tiktoken                  # Token 計算
 #
 # Embedding
