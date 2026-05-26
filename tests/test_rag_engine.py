@@ -216,8 +216,8 @@ REAL_ZIP = Path(__file__).parent.parent / "data" / "86bcef42-5dc6-415d-b186-4971
 
 
 @pytest.mark.skipif(
-    not REAL_ZIP.exists() or not os.getenv("ANTHROPIC_API_KEY"),
-    reason="Real Garmin ZIP or ANTHROPIC_API_KEY not available",
+    not REAL_ZIP.exists() or not os.getenv("GOOGLE_API_KEY"),
+    reason="Real Garmin ZIP or GOOGLE_API_KEY not available",
 )
 def test_rag_end_to_end():
     response = client.post(

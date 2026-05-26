@@ -1,21 +1,21 @@
-"""RAG chain — retrieval from pgvector + generation via Claude.
+"""RAG chain — retrieval from pgvector + generation via Gemini.
 
 Production-grade enhancements:
   1. Metadata-enriched context: each excerpt includes Date and Type tags so
-     Claude can distinguish a 2018 session from a 2026 one without guessing.
+     Gemini can distinguish a 2018 session from a 2026 one without guessing.
   2. Chronological sorting: chunks are sorted by date before context assembly
      (lost-in-the-middle mitigation — most recent data at the end of the prompt).
   3. Async invocation: ainvoke() keeps the FastAPI thread pool unblocked during
-     the 2-5s Anthropic network round-trip.
-  4. Token budgeting: character-length gate + explicit max_tokens + timeout
-     prevent runaway billing and stalled requests.
+     the network round-trip.
+  4. Token budgeting: character-length gate + explicit max_output_tokens
+     prevent runaway usage on very large k values.
 """
 
 from __future__ import annotations
 
-from langchain_anthropic import ChatAnthropic
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_postgres.vectorstores import PGVector
 
 from app.core.config import settings
@@ -36,12 +36,11 @@ _PROMPT = ChatPromptTemplate.from_messages([
 ])
 
 
-def _build_llm() -> ChatAnthropic:
-    return ChatAnthropic(
+def _build_llm() -> ChatGoogleGenerativeAI:
+    return ChatGoogleGenerativeAI(
         model=settings.llm_model,
-        api_key=settings.anthropic_api_key,
-        max_tokens=1024,
-        timeout=30.0,
+        google_api_key=settings.google_api_key,
+        max_output_tokens=1024,
     )
 
 
@@ -62,7 +61,7 @@ async def ask(
     k: int = 5,
     filter_dict: dict | None = None,
 ) -> tuple[str, list[tuple[Document, float]]]:
-    """Retrieve top-k chunks from pgvector and generate an answer via Claude.
+    """Retrieve top-k chunks from pgvector and generate an answer via Gemini.
 
     Returns:
         (answer, hits) — the LLM-generated answer string and the raw retrieved
@@ -72,7 +71,7 @@ async def ask(
         query, k=k, filter=filter_dict
     )
 
-    # Sort chronologically so Claude reads data oldest-to-newest; most recent
+    # Sort chronologically so Gemini reads data oldest-to-newest; most recent
     # data sits at the end of the prompt (strongest LLM recall position).
     hits.sort(key=lambda x: x[0].metadata.get("date") or "")
 

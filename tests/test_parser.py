@@ -63,9 +63,9 @@ def test_parse_garmin_zip_extracts_three_core_files(tmp_path: Path):
     result = parse_garmin_zip(str(archive_path))
 
     assert set(result.keys()) == set(DEFAULT_GARMIN_TARGETS)
-    assert result["summarizedActivities"]["activity_id"] == 123
-    assert result["sleepData"]["calendar_date"] == "2024-05-15"
-    assert result["personalRecords"]["personal_record_id"] == 1
+    assert result["summarizedActivities"][0]["activity_id"] == 123
+    assert result["sleepData"][0]["calendar_date"] == "2024-05-15"
+    assert result["personalRecords"][0]["personal_record_id"] == 1
 
 
 def test_get_garmin_json_names_finds_core_files(tmp_path: Path):

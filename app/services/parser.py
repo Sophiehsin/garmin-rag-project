@@ -58,8 +58,12 @@ def _match_core_key(file_name: str, target_keys: Iterable[str]) -> Optional[str]
 def parse_garmin_zip(
     zip_path: str,
     target_jsons: Optional[List[str]] = None,
-) -> Dict[str, Dict[str, Any]]:
+) -> Dict[str, List[Any]]:
     """Parse Garmin ZIP and extract core Garmin JSON files.
+
+    Merges ALL files matching each target type into a single list, so that
+    split exports (e.g. 5 summarizedActivities files, 25 sleepData files)
+    are fully ingested rather than truncated to the first file found.
 
     Args:
         zip_path: Path to the Garmin ZIP archive.
@@ -86,7 +90,7 @@ def parse_garmin_zip(
     if not selected_targets:
         raise ValueError("No valid target_jsons provided")
 
-    extracted: Dict[str, Dict[str, Any]] = {}
+    extracted: Dict[str, List[Any]] = {}
 
     with zipfile.ZipFile(path, "r") as archive:
         for member in archive.infolist():
@@ -94,13 +98,20 @@ def parse_garmin_zip(
                 continue
 
             core_key = _match_core_key(member.filename, selected_targets)
-            if core_key is None or core_key in extracted:
+            if core_key is None:
                 continue
 
             with archive.open(member, "r") as file_obj:
-                raw_data = file_obj.read()
-                payload = json.loads(raw_data.decode("utf-8"))
-                extracted[core_key] = normalize_json_keys(payload)
+                payload = normalize_json_keys(json.loads(file_obj.read().decode("utf-8")))
+
+            if core_key not in extracted:
+                extracted[core_key] = []
+
+            # Merge: if the file contains a list, extend; otherwise append
+            if isinstance(payload, list):
+                extracted[core_key].extend(payload)
+            else:
+                extracted[core_key].append(payload)
 
     missing = [key for key in selected_targets if key not in extracted]
     if missing:

@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     db_name: str = "vectordb"
     embedding_model: str = "all-MiniLM-L6-v2"
     vector_collection: str = "garmin_health"
-    anthropic_api_key: str = ""
-    llm_model: str = "claude-sonnet-4-6"
+    google_api_key: str = ""
+    llm_model: str = "gemini-2.5-flash"
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
