@@ -1,0 +1,566 @@
+[
+  {
+    "personalRecords": [
+      {
+        "personalRecordId": 30000001,
+        "activityId": 0,
+        "value": 13.0,
+        "prStartTimeGMT": "Sat Apr 11 16:00:00 GMT 2026",
+        "personalRecordType": "Current Goal Streak",
+        "createdDate": "2019-01-11",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000002,
+        "activityId": 0,
+        "value": 70215.0,
+        "prStartTimeGMT": "Fri Jun 21 16:00:00 GMT 2024",
+        "personalRecordType": "Most Steps in a Day",
+        "createdDate": "2019-01-11",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000003,
+        "activityId": 0,
+        "value": 210525.0,
+        "prStartTimeGMT": "Sat Aug 24 16:00:00 GMT 2024",
+        "personalRecordType": "Most Steps in a Week",
+        "createdDate": "2019-01-11",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000004,
+        "activityId": 0,
+        "value": 720225.0,
+        "prStartTimeGMT": "Fri Aug 30 16:00:00 GMT 2024",
+        "personalRecordType": "Most Steps in a Month",
+        "createdDate": "2019-01-11",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000005,
+        "activityId": 0,
+        "value": 6361.17822265625,
+        "prStartTimeGMT": "Sat Jan 12 22:10:01 GMT 2019",
+        "personalRecordType": "Best Half Marathon",
+        "createdDate": "2019-01-12",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000006,
+        "activityId": 0,
+        "value": 66.0,
+        "prStartTimeGMT": "Wed Mar 18 16:00:00 GMT 2026",
+        "personalRecordType": "Longest Goal Streak",
+        "createdDate": "2019-01-12",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000007,
+        "activityId": 0,
+        "value": 118776.140625,
+        "prStartTimeGMT": "Fri Jan 18 23:29:43 GMT 2019",
+        "personalRecordType": "Farthest Cycle",
+        "createdDate": "2019-01-19",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000008,
+        "activityId": 0,
+        "value": 3164.5,
+        "prStartTimeGMT": "Tue Jan 22 23:43:34 GMT 2019",
+        "personalRecordType": "Best 40km Cycle",
+        "createdDate": "2019-01-23",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000009,
+        "activityId": 0,
+        "value": 1065.485696554184,
+        "prStartTimeGMT": "Mon Jan 28 02:17:11 GMT 2019",
+        "personalRecordType": "Max Elevation Gain",
+        "createdDate": "2019-01-28",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000010,
+        "activityId": 0,
+        "value": 2708.55908203125,
+        "prStartTimeGMT": "Wed May 08 09:38:11 GMT 2019",
+        "personalRecordType": "Best 10km Run",
+        "createdDate": "2019-05-08",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000011,
+        "activityId": 0,
+        "value": 1278.875,
+        "prStartTimeGMT": "Wed May 08 10:01:31 GMT 2019",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2019-05-08",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000012,
+        "activityId": 0,
+        "value": 43084.5390625,
+        "prStartTimeGMT": "Sat May 18 08:32:00 GMT 2019",
+        "personalRecordType": "Farthest Run",
+        "createdDate": "2019-05-18",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000013,
+        "activityId": 0,
+        "value": 15641.580078125,
+        "prStartTimeGMT": "Sat May 18 08:32:17 GMT 2019",
+        "personalRecordType": "Best Full Marathon",
+        "createdDate": "2019-05-18",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000014,
+        "activityId": 0,
+        "value": 1269.508056640625,
+        "prStartTimeGMT": "Sat Sep 21 00:11:13 GMT 2019",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2019-09-20",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000015,
+        "activityId": 0,
+        "value": 1256.0260009765625,
+        "prStartTimeGMT": "Mon Nov 04 11:17:26 GMT 2019",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2019-11-04",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000016,
+        "activityId": 0,
+        "value": 5763.369140625,
+        "prStartTimeGMT": "Sat Jan 18 22:10:02 GMT 2020",
+        "personalRecordType": "Best Half Marathon",
+        "createdDate": "2020-01-19",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000017,
+        "activityId": 0,
+        "value": 2699.97509765625,
+        "prStartTimeGMT": "Sat Jan 18 23:00:46 GMT 2020",
+        "personalRecordType": "Best 10km Run",
+        "createdDate": "2020-01-19",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000018,
+        "activityId": 0,
+        "value": 1228.501953125,
+        "prStartTimeGMT": "Wed Nov 04 00:00:21 GMT 2020",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2020-11-04",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000019,
+        "activityId": 0,
+        "value": 1228.501953125,
+        "prStartTimeGMT": "Wed Nov 04 00:00:21 GMT 2020",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2020-11-04",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000020,
+        "activityId": 0,
+        "value": 2686.791015625,
+        "prStartTimeGMT": "Sat Nov 28 22:54:46 GMT 2020",
+        "personalRecordType": "Best 10km Run",
+        "createdDate": "2020-11-28",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000021,
+        "activityId": 0,
+        "value": 2590.52001953125,
+        "prStartTimeGMT": "Sat Dec 05 23:03:47 GMT 2020",
+        "personalRecordType": "Best 10km Run",
+        "createdDate": "2020-12-05",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000022,
+        "activityId": 0,
+        "value": 5499.69384765625,
+        "prStartTimeGMT": "Sat Dec 19 23:00:28 GMT 2020",
+        "personalRecordType": "Best Half Marathon",
+        "createdDate": "2020-12-19",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000023,
+        "activityId": 0,
+        "value": 5499.69384765625,
+        "prStartTimeGMT": "Sat Dec 19 23:00:28 GMT 2020",
+        "personalRecordType": "Best Half Marathon",
+        "createdDate": "2020-12-19",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000024,
+        "activityId": 0,
+        "value": 2564.696044921875,
+        "prStartTimeGMT": "Sat Dec 19 23:49:08 GMT 2020",
+        "personalRecordType": "Best 10km Run",
+        "createdDate": "2020-12-19",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000025,
+        "activityId": 0,
+        "value": 1236.072021484375,
+        "prStartTimeGMT": "Sun Dec 20 00:11:19 GMT 2020",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2020-12-19",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000026,
+        "activityId": 0,
+        "value": 1235.8170166015625,
+        "prStartTimeGMT": "Sat Dec 26 23:12:55 GMT 2020",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2020-12-26",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000027,
+        "activityId": 0,
+        "value": 1250.35302734375,
+        "prStartTimeGMT": "Sat Jan 02 22:59:23 GMT 2021",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2021-01-02",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000028,
+        "activityId": 0,
+        "value": 1253.3819580078125,
+        "prStartTimeGMT": "Sat Jan 16 22:54:43 GMT 2021",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2021-01-16",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000029,
+        "activityId": 0,
+        "value": 1188.633056640625,
+        "prStartTimeGMT": "Tue Oct 05 00:00:31 GMT 2021",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2021-10-07",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000030,
+        "activityId": 0,
+        "value": 156651.015625,
+        "prStartTimeGMT": "Fri Oct 29 21:24:59 GMT 2021",
+        "personalRecordType": "Farthest Cycle",
+        "createdDate": "2021-10-30",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000031,
+        "activityId": 0,
+        "value": 2383.922933578491,
+        "prStartTimeGMT": "Fri Oct 29 21:24:59 GMT 2021",
+        "personalRecordType": "Max Elevation Gain",
+        "createdDate": "2021-10-30",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000032,
+        "activityId": 0,
+        "value": 5286.43896484375,
+        "prStartTimeGMT": "Sat Dec 18 23:00:27 GMT 2021",
+        "personalRecordType": "Best Half Marathon",
+        "createdDate": "2021-12-18",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000033,
+        "activityId": 0,
+        "value": 2459.830078125,
+        "prStartTimeGMT": "Sat Dec 18 23:04:30 GMT 2021",
+        "personalRecordType": "Best 10km Run",
+        "createdDate": "2021-12-18",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000034,
+        "activityId": 0,
+        "value": 5286.43896484375,
+        "prStartTimeGMT": "Sat Dec 18 23:00:27 GMT 2021",
+        "personalRecordType": "Best Half Marathon",
+        "createdDate": "2021-12-18",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000035,
+        "activityId": 0,
+        "value": 2428.277043938637,
+        "prStartTimeGMT": "Fri Jan 14 23:20:26 GMT 2022",
+        "personalRecordType": "Max Elevation Gain",
+        "createdDate": "2022-01-15",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000036,
+        "activityId": 0,
+        "value": 1164.0150146484375,
+        "prStartTimeGMT": "Wed Jul 20 22:15:57 GMT 2022",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2022-07-20",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000037,
+        "activityId": 0,
+        "value": 2426.4990234375,
+        "prStartTimeGMT": "Fri Oct 21 06:59:57 GMT 2022",
+        "personalRecordType": "Best 10km Run",
+        "createdDate": "2022-10-21",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000038,
+        "activityId": 0,
+        "value": 59.0,
+        "prStartTimeGMT": "Sun Nov 06 02:59:50 GMT 2022",
+        "personalRecordType": "Best 100m Pool Swim",
+        "createdDate": "2022-11-05",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000039,
+        "activityId": 0,
+        "value": 402.0,
+        "prStartTimeGMT": "Sun Nov 13 02:44:17 GMT 2022",
+        "personalRecordType": "Best 400m Pool Swim",
+        "createdDate": "2022-11-13",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000040,
+        "activityId": 0,
+        "value": 773.0,
+        "prStartTimeGMT": "Sun Nov 13 02:36:03 GMT 2022",
+        "personalRecordType": "Best 750m Pool Swim",
+        "createdDate": "2022-11-13",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000041,
+        "activityId": 0,
+        "value": 1020.0,
+        "prStartTimeGMT": "Sun Nov 13 02:36:03 GMT 2022",
+        "personalRecordType": "Best 1000m Pool Swim",
+        "createdDate": "2022-11-13",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000042,
+        "activityId": 0,
+        "value": 1635.0,
+        "prStartTimeGMT": "Sun Nov 13 02:36:03 GMT 2022",
+        "personalRecordType": "Best 1500m Pool Swim",
+        "createdDate": "2022-11-13",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000043,
+        "activityId": 0,
+        "value": 2650.0,
+        "prStartTimeGMT": "Sun Nov 13 02:32:32 GMT 2022",
+        "personalRecordType": "Longest Pool Swim",
+        "createdDate": "2022-11-13",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000044,
+        "activityId": 0,
+        "value": 11627.55078125,
+        "prStartTimeGMT": "Sat Dec 17 22:30:02 GMT 2022",
+        "personalRecordType": "Best Full Marathon",
+        "createdDate": "2022-12-18",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000045,
+        "activityId": 0,
+        "value": 219.4290008544922,
+        "prStartTimeGMT": "Wed Jan 18 23:20:48 GMT 2023",
+        "personalRecordType": "Best 1km Run",
+        "createdDate": "2023-01-18",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000046,
+        "activityId": 0,
+        "value": 2421.889892578125,
+        "prStartTimeGMT": "Tue Mar 07 23:28:47 GMT 2023",
+        "personalRecordType": "Best 10km Run",
+        "createdDate": "2023-03-07",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000047,
+        "activityId": 0,
+        "value": 215.81100463867188,
+        "prStartTimeGMT": "Thu Mar 09 09:38:20 GMT 2023",
+        "personalRecordType": "Best 1km Run",
+        "createdDate": "2023-03-09",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000048,
+        "activityId": 0,
+        "value": 1144.85205078125,
+        "prStartTimeGMT": "Thu Mar 09 09:22:52 GMT 2023",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2023-03-09",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000049,
+        "activityId": 0,
+        "value": 188.7989959716797,
+        "prStartTimeGMT": "Sat Mar 18 23:25:42 GMT 2023",
+        "personalRecordType": "Best 1km Run",
+        "createdDate": "2023-03-18",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000050,
+        "activityId": 0,
+        "value": 2347.259033203125,
+        "prStartTimeGMT": "Sat Mar 18 22:50:14 GMT 2023",
+        "personalRecordType": "Best 10km Run",
+        "createdDate": "2023-03-18",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000051,
+        "activityId": 0,
+        "value": 5281.5771484375,
+        "prStartTimeGMT": "Sat Apr 08 21:30:00 GMT 2023",
+        "personalRecordType": "Best Half Marathon",
+        "createdDate": "2023-04-08",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000052,
+        "activityId": 0,
+        "value": 1136.1400146484375,
+        "prStartTimeGMT": "Sat Aug 05 21:53:11 GMT 2023",
+        "personalRecordType": "Best 5km Run",
+        "createdDate": "2023-08-05",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000053,
+        "activityId": 0,
+        "value": 5219.97998046875,
+        "prStartTimeGMT": "Sat Dec 16 23:00:00 GMT 2023",
+        "personalRecordType": "Best Half Marathon",
+        "createdDate": "2023-12-16",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000054,
+        "activityId": 0,
+        "value": 11425.861328125,
+        "prStartTimeGMT": "Sun Mar 10 00:10:04 GMT 2024",
+        "personalRecordType": "Best Full Marathon",
+        "createdDate": "2024-03-09",
+        "current": false,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000055,
+        "activityId": 0,
+        "value": 5178.89892578125,
+        "prStartTimeGMT": "Sat Dec 20 23:00:27 GMT 2025",
+        "personalRecordType": "Best Half Marathon",
+        "createdDate": "2025-12-20",
+        "current": true,
+        "confirmed": true
+      },
+      {
+        "personalRecordId": 30000056,
+        "activityId": 0,
+        "value": 10841.9052734375,
+        "prStartTimeGMT": "Sun Feb 15 00:02:20 GMT 2026",
+        "personalRecordType": "Best Full Marathon",
+        "createdDate": "2026-02-14",
+        "current": true,
+        "confirmed": true
+      }
+    ]
+  }
+]

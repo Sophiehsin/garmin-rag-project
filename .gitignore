@@ -24,8 +24,14 @@ env/
 .env.production
 
 # Data (本地測試用樣本數據)
-data/
+data/*
 !data/.gitkeep
+!data/demo
+data/demo/*
+!data/demo/garmin_demo.zip
+!data/demo/summarizedActivities.json
+!data/demo/sleepData.json
+!data/demo/personalRecord.json
 
 # Database
 *.db
