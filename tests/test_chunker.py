@@ -215,15 +215,16 @@ def test_format_record_current_flag():
 # ---------------------------------------------------------------------------
 
 def test_build_metadata_activity_data_type():
-    meta = build_metadata("activity", CYCLING_ACTIVITY)
+    meta = build_metadata("activity", CYCLING_ACTIVITY, user_id="test_user")
     assert meta["data_type"] == "activity"
     assert meta["activity_type"] == "cycling"
     assert meta["record_id"] == 4667415185
     assert meta["is_current_pr"] is None
+    assert meta["user_id"] == "test_user"
 
 
 def test_build_metadata_activity_has_date():
-    meta = build_metadata("activity", CYCLING_ACTIVITY)
+    meta = build_metadata("activity", CYCLING_ACTIVITY, user_id="test_user")
     assert meta["date"] is not None
     # Should be ISO date format YYYY-MM-DD
     assert len(meta["date"]) == 10
@@ -231,19 +232,19 @@ def test_build_metadata_activity_has_date():
 
 
 def test_build_metadata_personal_record_has_is_current_pr():
-    meta_current = build_metadata("personal_record", PERSONAL_RECORD)
-    meta_historical = build_metadata("personal_record", HISTORICAL_RECORD)
+    meta_current = build_metadata("personal_record", PERSONAL_RECORD, user_id="test_user")
+    meta_historical = build_metadata("personal_record", HISTORICAL_RECORD, user_id="test_user")
     assert meta_current["is_current_pr"] is True
     assert meta_historical["is_current_pr"] is False
 
 
 def test_build_metadata_activity_is_current_pr_is_none():
-    meta = build_metadata("activity", CYCLING_ACTIVITY)
+    meta = build_metadata("activity", CYCLING_ACTIVITY, user_id="test_user")
     assert meta["is_current_pr"] is None
 
 
 def test_build_metadata_sleep_data_type():
-    meta = build_metadata("sleep", SLEEP_RECORD)
+    meta = build_metadata("sleep", SLEEP_RECORD, user_id="test_user")
     assert meta["data_type"] == "sleep"
     assert meta["activity_type"] is None
     assert meta["is_current_pr"] is None
@@ -276,7 +277,7 @@ def test_chunk_garmin_data_with_real_samples():
         "personalRecords": records_raw,
     }
 
-    docs = chunk_garmin_data(parsed)
+    docs = chunk_garmin_data(parsed, user_id="test_user")
 
     assert len(docs) > 0
     for doc in docs:

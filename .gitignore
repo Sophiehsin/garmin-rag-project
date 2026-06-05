@@ -41,6 +41,10 @@ docker-compose.override.yml
 # Project notes & archive
 docs/
 
+# Local architecture docs
+system_architecture.md
+system_architecture_chinese.md
+
 # Claude Code guidance file
 CLAUDE.md
 

@@ -1,14 +1,35 @@
 """Tests for app/services/rag_engine.py"""
 
+import os
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+from fastapi.testclient import TestClient
 from langchain_core.documents import Document
 
 from app.api.dependencies import get_store
+from app.core.security import get_current_user
 from app.main import app
+from app.models.sql_models import User
 from app.services.rag_engine import MAX_CONTEXT_CHARS, _build_context, ask
+
+client = TestClient(app)
+
+_MOCK_USER = User(id=1, email="test@example.com")
+_MOCK_STORE_DEFAULT = MagicMock()
+_MOCK_STORE_DEFAULT.similarity_search_with_score.return_value = []
+
+
+def _auth():
+    """Override auth + store so tests never hit a real DB."""
+    app.dependency_overrides[get_current_user] = lambda: _MOCK_USER
+    app.dependency_overrides[get_store] = lambda: _MOCK_STORE_DEFAULT
+
+
+def _clear():
+    app.dependency_overrides.clear()
+
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -73,10 +94,10 @@ async def test_ask_returns_answer_and_hits():
         mock_llm = MagicMock()
         mock_llm_factory.return_value = mock_llm
 
-        # Patch the chain composition (_PROMPT | llm).ainvoke
         with patch("app.services.rag_engine._PROMPT") as mock_prompt:
             mock_prompt.__or__ = MagicMock(return_value=chain_mock)
-            answer, hits = await ask("best cycling", store, k=3)
+            # use_rerank=False avoids loading the cross-encoder in unit tests
+            answer, hits = await ask("best cycling", store, k=3, use_rerank=False)
 
     assert isinstance(answer, str)
     assert len(hits) == 1
@@ -107,7 +128,7 @@ async def test_ask_sorts_hits_chronologically():
 
         with patch("app.services.rag_engine._PROMPT") as mock_prompt:
             mock_prompt.__or__ = MagicMock(return_value=chain_mock)
-            await ask("any query", store)
+            await ask("any query", store, use_rerank=False)
 
     ctx = captured_context[0]
     oldest_pos = ctx.find("2022-01-15")
@@ -128,7 +149,8 @@ async def test_ask_passes_filter_to_store():
 
         with patch("app.services.rag_engine._PROMPT") as mock_prompt:
             mock_prompt.__or__ = MagicMock(return_value=chain_mock)
-            await ask("sleep quality", store, k=5, filter_dict={"data_type": "sleep"})
+            # user_id=None so _build_filter is skipped; filter_dict passed directly
+            await ask("sleep quality", store, k=5, filter_dict={"data_type": "sleep"}, use_rerank=False)
 
     store.similarity_search_with_score.assert_called_once_with(
         "sleep quality", k=5, filter={"data_type": "sleep"}
@@ -139,27 +161,24 @@ async def test_ask_passes_filter_to_store():
 # Query endpoint tests (use FastAPI TestClient + dependency overrides)
 # ---------------------------------------------------------------------------
 
-from fastapi.testclient import TestClient
-
-client = TestClient(app)
-
-
 def test_query_endpoint_with_llm_mocked():
     doc = _make_doc("You cycled 20 km.")
     mock_store = MagicMock()
 
-    async def fake_ask(query, store, k, filter_dict):
+    async def fake_ask(**kwargs):
         return "Great cycling session!", [(doc, 0.95)]
 
+    _auth()
     app.dependency_overrides[get_store] = lambda: mock_store
     try:
-        with patch("app.api.routers.query.rag_engine.ask", side_effect=fake_ask):
+        # Patch the canonical location; query.py does a local import of ask
+        with patch("app.services.rag_engine.ask", side_effect=fake_ask):
             response = client.post(
                 "/api/v1/query",
                 json={"query": "cycling performance", "k": 3, "use_llm": True},
             )
     finally:
-        app.dependency_overrides.clear()
+        _clear()
 
     assert response.status_code == 200
     body = response.json()
@@ -172,6 +191,7 @@ def test_query_endpoint_use_llm_false():
     mock_store = MagicMock()
     mock_store.similarity_search_with_score.return_value = [(doc, 0.88)]
 
+    _auth()
     app.dependency_overrides[get_store] = lambda: mock_store
     try:
         response = client.post(
@@ -179,7 +199,7 @@ def test_query_endpoint_use_llm_false():
             json={"query": "sleep last week", "use_llm": False},
         )
     finally:
-        app.dependency_overrides.clear()
+        _clear()
 
     assert response.status_code == 200
     body = response.json()
@@ -190,27 +210,26 @@ def test_query_endpoint_use_llm_false():
 def test_query_endpoint_llm_503_on_failure():
     mock_store = MagicMock()
 
-    async def failing_ask(*args, **kwargs):
-        raise RuntimeError("Anthropic timeout")
+    async def failing_ask(**kwargs):
+        raise RuntimeError("Gemini timeout")
 
+    _auth()
     app.dependency_overrides[get_store] = lambda: mock_store
     try:
-        with patch("app.api.routers.query.rag_engine.ask", side_effect=failing_ask):
+        with patch("app.services.rag_engine.ask", side_effect=failing_ask):
             response = client.post(
                 "/api/v1/query",
                 json={"query": "best run", "use_llm": True},
             )
     finally:
-        app.dependency_overrides.clear()
+        _clear()
 
     assert response.status_code == 503
 
 
 # ---------------------------------------------------------------------------
-# Integration test (requires running DB + ANTHROPIC_API_KEY in .env)
+# Integration test (requires running DB + GOOGLE_API_KEY in .env)
 # ---------------------------------------------------------------------------
-
-import os
 
 REAL_ZIP = Path(__file__).parent.parent / "data" / "86bcef42-5dc6-415d-b186-49715dc89d2f_1.zip"
 
@@ -220,10 +239,14 @@ REAL_ZIP = Path(__file__).parent.parent / "data" / "86bcef42-5dc6-415d-b186-4971
     reason="Real Garmin ZIP or GOOGLE_API_KEY not available",
 )
 def test_rag_end_to_end():
-    response = client.post(
-        "/api/v1/query",
-        json={"query": "What was my best cycling session?", "k": 5, "use_llm": True},
-    )
+    _auth()
+    try:
+        response = client.post(
+            "/api/v1/query",
+            json={"query": "What was my best cycling session?", "k": 5, "use_llm": True},
+        )
+    finally:
+        _clear()
     assert response.status_code == 200
     body = response.json()
     assert body["answer"] is not None

@@ -65,21 +65,20 @@ def get_embeddings() -> HuggingFaceEmbeddings:
 def _make_doc_id(doc: Document) -> str:
     """Generate a stable SHA-256 ID from a document's unique identity fields.
 
-    Using data_type + record_id + date means re-uploading the same Garmin ZIP
-    produces the same IDs, so PGVector upserts instead of creating duplicates.
-    Sleep records have no record_id, so calendar_date alone is the key.
-    Falls back to hashing page_content when all metadata keys are empty/None,
-    which prevents collisions on corrupt records with no identifying fields.
+    Key format: "{user_id}:{data_type}:{record_id}:{date}"
+    Including user_id prevents cross-user collisions when two users happen to
+    have the same activity_id (Garmin IDs are not globally unique).
+    Falls back to hashing page_content for corrupt records missing all fields.
     """
     meta = doc.metadata
+    user_id = meta.get("user_id") or ""
     data_type = meta.get("data_type") or ""
     record_id = meta.get("record_id")
     date = meta.get("date") or ""
 
     if data_type and (record_id is not None or date):
-        key = f"{data_type}:{record_id}:{date}"
+        key = f"{user_id}:{data_type}:{record_id}:{date}"
     else:
-        # Fallback: hash the content itself so corrupt records don't collide
         key = f"content:{doc.page_content}"
 
     return hashlib.sha256(key.encode()).hexdigest()
